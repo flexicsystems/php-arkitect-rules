@@ -19,23 +19,34 @@ final class CommandRules extends SymfonyRule implements Rule
 {
     public function definition(): array|ArchRule
     {
-        $rules = [];
+        return [
+            $this->shouldEndWithCommandSuffix(),
+            $this->shouldExtendCommandClass(),
+            $this->shouldOnlyBeDefinedInCommandNamespace(),
+        ];
+    }
 
-        $rules[] = \Arkitect\Rules\Rule::allClasses()
+    public function shouldEndWithCommandSuffix(): ArchRule
+    {
+        return \Arkitect\Rules\Rule::allClasses()
             ->that(new \Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces($this->namespace))
             ->should(new \Arkitect\Expression\ForClasses\HaveNameMatching('*Command'))
             ->because('Symfony Command classes should be named with the suffix "*Command"');
+    }
 
-        $rules[] = \Arkitect\Rules\Rule::allClasses()
+    public function shouldExtendCommandClass(): ArchRule
+    {
+        return \Arkitect\Rules\Rule::allClasses()
             ->that(new \Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces($this->namespace))
             ->should(new \Arkitect\Expression\ForClasses\Extend(\Symfony\Component\Console\Command\Command::class))
             ->because(\sprintf('Symfony Command classes should extend %s', \Symfony\Component\Console\Command\Command::class));
+    }
 
-        $rules[] = \Arkitect\Rules\Rule::allClasses()
+    public function shouldOnlyBeDefinedInCommandNamespace(): ArchRule
+    {
+        return \Arkitect\Rules\Rule::allClasses()
             ->that(new \Arkitect\Expression\ForClasses\Extend(\Symfony\Component\Console\Command\Command::class))
             ->should(new \Arkitect\Expression\ForClasses\ResideInOneOfTheseNamespaces($this->namespace))
             ->because(\sprintf('Symfony Command classes should reside in the namespace %s', $this->namespace));
-
-        return $rules;
     }
 }
