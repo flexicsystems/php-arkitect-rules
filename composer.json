@@ -1,0 +1,39 @@
+{
+  "name": "flexic/php-arkitect-rules",
+  "type": "library",
+  "description": "Provides additional rules for phparkitect/phparkitect.",
+  "keywords": [
+    "phparkitect",
+    "phparkitect-rules"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hendrik Legge",
+      "email": "info@themepoint.de",
+      "homepage": "https://themepoint.de"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "phparkitect/phparkitect": "^0.2.31"
+  },
+  "config": {
+    "platform": {
+      "php": "8.1"
+    },
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Flexic\\PHPArkitect\\Rules\\": "src/"
+    }
+  },
+  "require-dev": {
+    "ergebnis/php-cs-fixer-config": "^4.9.0",
+    "phpstan/phpstan": "^1.8.8",
+    "phpstan/phpstan-deprecation-rules": "^1.0.0",
+    "phpstan/phpstan-strict-rules": "^1.4.4"
+  }
+}
